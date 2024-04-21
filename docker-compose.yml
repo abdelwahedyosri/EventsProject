@@ -18,9 +18,9 @@ services:
     image: sonarqube:latest
     container_name: sonarqube
     ports:
-      - "9000:9000"
-      - "9092:9092"
-      - "9080:9000"
+      - "9000:9000"   # SonarQube web interface
+      - "9080:9080"   # SonarQube HTTP (change this from 80 to 9080)
+      - "9092:9092"   # SonarQube WebSocket
     networks:
       - sonarnet
     environment:
