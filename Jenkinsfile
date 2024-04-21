@@ -1,8 +1,8 @@
 pipeline {
     agent any
    environment {
-          SONARQUBE_JDBC_USERNAME = credentials('SONARQUBE_DB_CREDENTIALS_USERNAME')
-          SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS_PASSWORD')
+          SONARQUBE_JDBC_USERNAME = credentials('SONARQUBE_DB_CREDENTIALS')
+          SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS')
       }
     stages {
         stage('Run Containers') {
