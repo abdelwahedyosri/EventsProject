@@ -3,6 +3,7 @@ pipeline {
    environment {
           SONARQUBE_JDBC_USERNAME = credentials('SONARQUBE_DB_CREDENTIALS')
           SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS')
+          SONARQUBE_SCANNER_HOME = tool 'SonarQube Scanner'
       }
     stages {
         stage('Run Containers') {
