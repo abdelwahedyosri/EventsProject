@@ -3,7 +3,7 @@ pipeline {
    environment {
           SONARQUBE_JDBC_USERNAME = credentials('SONARQUBE_DB_CREDENTIALS')
           SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS')
-          SONARQUBE_SCANNER_HOME = tool 'sonar-scanner'
+          SONARQUBE_SCANNER_HOME ='/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner'
       }
     stages {
         stage('Run Containers') {
@@ -27,7 +27,7 @@ pipeline {
                 script {
                     withSonarQubeEnv('SonarQube') {
                         // Path to your source code
-                        sh "${tool 'sonar-scanner'}/bin/sonar-scanner"
+                        sh "${env.SONARQUBE_SCANNER_HOME}/bin/sonar-scanner"
                     }
                 }
             }
