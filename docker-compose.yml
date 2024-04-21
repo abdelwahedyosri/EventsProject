@@ -14,19 +14,7 @@ services:
       MYSQL_USER: sonar
       MYSQL_PASSWORD: sonar
 
-  sonarqube:
-    image: sonarqube:latest
-    container_name: sonarqube
-    ports:
-      - "9000:9000"
-      - "9092:9092"
-      - "9080:9080"
-    networks:
-      - sonarnet
-    environment:
-      SONARQUBE_JDBC_URL: jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&useSSL=false
-      SONARQUBE_JDBC_USERNAME: ${SONARQUBE_JDBC_USERNAME}
-      SONARQUBE_JDBC_PASSWORD: ${SONARQUBE_JDBC_PASSWORD}
+
 
   nexus:
     image: sonatype/nexus3:latest

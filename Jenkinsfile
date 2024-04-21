@@ -28,8 +28,18 @@ pipeline {
             steps {
                 script {
                     // Execute SonarQube scanner
-                    withSonarQubeEnv('SonarQube') {
-                         sh "${env.SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.host.url=${env.SONAR_HOST_URL}"
+                    withCredentials([usernamePassword(credentialsId: 'SONARQUBE_DB_CREDENTIALS', usernameVariable: 'SONARQUBE_JDBC_USERNAME', passwordVariable: 'SONARQUBE_JDBC_PASSWORD')]) {
+                        sh '''
+                            docker run --network sonarnet \
+                                -e SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&useSSL=false \
+                                -e SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME} \
+                                -e SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD} \
+                                -e SONAR_HOST_URL=${SONAR_HOST_URL} \
+                                -v $(pwd):/usr/src/app \
+                                -w /usr/src/app \
+                                sonarqube:latest \
+                                ${SONAR_SCANNER_HOME}/bin/sonar-scanner
+                        '''
                     }
                 }
             }
