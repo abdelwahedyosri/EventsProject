@@ -15,6 +15,19 @@ pipeline {
                 }
             }
         }
+         stage('Wait for SonarQube to Start') {
+                    steps {
+                        script {
+                            // Wait for SonarQube to start
+                            timeout(time: 5, unit: 'MINUTES') {
+                                waitUntil {
+                                    def response = sh(script: "curl -s -o /dev/null -w \"%{http_code}\" ${env.SONAR_HOST_URL}", returnStatus: true)
+                                    return response == 200
+                                }
+                            }
+                        }
+                    }
+         }
         stage('Run JUnit tests') {
             steps {
                 // Run JUnit tests using Maven
