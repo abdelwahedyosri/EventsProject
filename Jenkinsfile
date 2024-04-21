@@ -19,7 +19,7 @@ pipeline {
                     steps {
                         script {
                             // Wait for SonarQube to start
-                            timeout(time: 5, unit: 'MINUTES') {
+                            timeout(time: 30, unit: 'SECONDS') {
                                 waitUntil {
                                     def response = sh(script: "curl -s -o /dev/null -w \"%{http_code}\" ${env.SONAR_HOST_URL}", returnStatus: true)
                                     return response == 200
