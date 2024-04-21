@@ -18,8 +18,9 @@ services:
     image: sonarqube:latest
     container_name: sonarqube
     ports:
-      - "9080:9000"
+      - "9000:9000"
       - "9092:9092"
+      - "9080:80"
     networks:
       - sonarnet
     environment:
