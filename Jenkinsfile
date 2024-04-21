@@ -3,7 +3,8 @@ pipeline {
     environment {
         SONARQUBE_JDBC_USERNAME = credentials('SONARQUBE_DB_CREDENTIALS')
         SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS')
-        SONARQUBE_SCANNER_HOME = '/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar-scanner'
+        SONAR_HOST_URL = 'http://192.168.33.10:9000' // Update this with your SonarQube server URL
+        SONAR_SCANNER_HOME = tool 'sonar-scanner'
     }
     stages {
         stage('Run Containers') {
@@ -27,8 +28,7 @@ pipeline {
                 script {
                     // Execute SonarQube scanner
                     withSonarQubeEnv('SonarQube') {
-                         def scannerHome = tool 'sonar-scanner'
-                          sh "${scannerHome}/bin/sonar-scanner"
+                         sh "${env.SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.host.url=${env.SONAR_HOST_URL}"
                     }
                 }
             }
