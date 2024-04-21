@@ -3,7 +3,7 @@ pipeline {
     environment {
         SONARQUBE_JDBC_USERNAME = credentials('SONARQUBE_DB_CREDENTIALS')
         SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS')
-        SONAR_HOST_URL = 'http://192.168.33.10:9090' // Update this with your SonarQube server URL
+        SONAR_HOST_URL = 'http://192.168.33.10:9080' // Update this with your SonarQube server URL
         SONAR_SCANNER_HOME = tool 'sonar-scanner'
     }
     stages {
