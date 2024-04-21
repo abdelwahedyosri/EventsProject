@@ -28,12 +28,12 @@ pipeline {
                     // Execute SonarQube scanner
                     sh '''
                         docker run --network sonarnet \
-                            -e SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&useSSL=false \
-                            -e SONAR_HOST_URL=${SONAR_HOST_URL} \
-                            -v $(pwd):/usr/src/app \
-                            -w /usr/src/app \
-                            sonarqube:latest \
-                            ${SONAR_SCANNER_HOME}/bin/sonar-scanner
+                           -e SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&useSSL=false \
+                           -e SONAR_HOST_URL="${SONAR_HOST_URL}" \
+                           -v "$(pwd):/usr/src/app" \
+                           -w /usr/src/app \
+                           sonarqube:latest \
+                           ${SONAR_SCANNER_HOME}/bin/sonar-scanner
                     '''
                 }
             }
