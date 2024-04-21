@@ -24,23 +24,7 @@ pipeline {
                 }
             }
         }
-        stage('Build and analyze') {
-            steps {
-                script {
-                    // Execute SonarQube scanner
-                    withCredentials([usernamePassword(credentialsId: 'SONARQUBE_DB_CREDENTIALS', usernameVariable: 'SONARQUBE_JDBC_USERNAME', passwordVariable: 'SONARQUBE_JDBC_PASSWORD')]) {
-                        sh """
-                            docker run --rm --network sonarnet \
-                                -e SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&useSSL=false \
-                                -e SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME} \
-                                -e SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD} \
-                                -e SONAR_HOST_URL=${SONAR_HOST_URL} \
-                                sonarqube:latest
-                        """
-                    }
-                }
-            }
-        }
+
         stage('Deploy to Nexus Repository') {
             steps {
                 script {
