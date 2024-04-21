@@ -20,7 +20,7 @@ services:
     ports:
       - "9000:9000"
       - "9092:9092"
-      - "9080:80"
+      - "9080:9000"
     networks:
       - sonarnet
     environment:
