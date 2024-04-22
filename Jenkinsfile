@@ -78,14 +78,13 @@ pipeline {
                 }
             }
         }
-        stage('Show Prometheus Metrics') {
-            steps {
-                // Query metrics from Prometheus
-                script {
-                    sh 'curl -s http://prometheus:9090/metrics'
-                }
-            }
-        }
+       stage('Show Prometheus Metrics') {
+           steps {
+               script {
+                   sh "docker exec -t prometheus curl -s http://localhost:9090/metrics"
+               }
+           }
+       }
 
        /* stage('Run JUnit tests') {
             steps {
