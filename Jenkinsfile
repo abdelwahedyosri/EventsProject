@@ -12,9 +12,9 @@ pipeline {
         EMAIL_RECIPIENTS = 'yosri.abdelwahed@esprit.tn' // Update with your email address
         SONAR_SCANNER_HOME = tool 'sonar-scanner
     }
-    triggers {
-            git branch: 'main', pushOnly: true
-    }
+     triggers {
+            githubPush() // Trigger the pipeline on every push
+        }
     stages {
         stage('Shutdown Containers') {
             steps {
