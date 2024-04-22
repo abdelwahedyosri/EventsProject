@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image for the project
-                    sh "docker build -t ${PROJECT_NAME}_image -f ./${PROJECT_NAME}/${DOCKERFILE_NAME} ./${PROJECT_NAME}"
+                     sh "docker build -t ${PROJECT_NAME}_image -f ./${PROJECT_NAME}/${DOCKERFILE_NAME} ./${PROJECT_NAME}"
                 }
             }
         }
