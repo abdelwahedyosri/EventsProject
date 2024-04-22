@@ -12,7 +12,7 @@ pipeline {
         EMAIL_RECIPIENTS = 'yosri.abdelwahed@esprit.tn' // Update with your email address
     }
     triggers {
-        pollSCM('* * * * *') // Poll SCM every minute
+            git branch: 'main', pushOnly: true
     }
     stages {
         stage('Shutdown Containers') {
