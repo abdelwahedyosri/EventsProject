@@ -14,8 +14,6 @@ services:
       MYSQL_USER: sonar
       MYSQL_PASSWORD: sonar
 
-
-
   nexus:
     image: sonatype/nexus3:latest
     container_name: nexus
@@ -23,6 +21,9 @@ services:
       - "8081:8081"
     networks:
       - sonarnet
+    volumes:
+      - ./nexus-data:/nexus-data   # Mount nexus data directory to host
+      - ./nexus-backups:/nexus-backups  # Optionally mount nexus backups directory to host
 
   prometheus:
     image: prom/prometheus:latest
