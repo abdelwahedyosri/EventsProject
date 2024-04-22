@@ -10,11 +10,10 @@ pipeline {
         DOCKER_HUB_CREDENTIALS = 'DOCKER_HUB_CREDENTIALS' // Update with the ID of your Docker Hub credentials
         DOCKERFILE_NAME = 'Dockerfile'
         EMAIL_RECIPIENTS = 'yosri.abdelwahed@esprit.tn' // Update with your email address
-        SONAR_SCANNER_HOME = tool 'sonar-scanner
     }
-     triggers {
-            githubPush() // Trigger the pipeline on every push
-        }
+    triggers {
+        githubPush() // Trigger the pipeline on every push
+    }
     stages {
         stage('Shutdown Containers') {
             steps {
@@ -103,6 +102,16 @@ pipeline {
             }
         }*/
 
+       stage('SonarQube Metrics') {
+           steps {
+               script {
+                   dir("${PROJECT_NAME}") {
+                       sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${PROJECT_NAME} -Dsonar.sources=./ -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONARQUBE_JDBC_USERNAME} -Dsonar.password=${SONARQUBE_JDBC_PASSWORD}"
+                   }
+               }
+           }
+       }
+
        stage('Email Notification') {
            steps {
                script {
@@ -110,15 +119,6 @@ pipeline {
                }
            }
        }
-        stage('SonarQube Metrics') {
-                   steps {
-                       script {
-                           dir("${PROJECT_NAME}") {
-                               sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${PROJECT_NAME} -Dsonar.sources=./ -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONARQUBE_JDBC_USERNAME} -Dsonar.password=${SONARQUBE_JDBC_PASSWORD}"
-                           }
-                       }
-                   }
-        }
 
        stage('Push to Docker Hub') {
            steps {
