@@ -32,6 +32,8 @@ services:
       - "9090:9090"
     networks:
       - sonarnet
+    volumes:
+      - ./prometheus:/etc/prometheus
 
 networks:
   sonarnet:

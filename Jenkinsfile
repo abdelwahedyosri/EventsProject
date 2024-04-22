@@ -70,6 +70,15 @@ pipeline {
             }
         }
 
+        stage('Deploy Prometheus') {
+            steps {
+                // Deploy Prometheus
+                script {
+                    sh 'docker-compose up -d prometheus'
+                }
+            }
+        }
+
        /* stage('Run JUnit tests') {
             steps {
                 // Run JUnit tests using Maven
@@ -85,7 +94,6 @@ pipeline {
                     // Log in to Docker Hub
                     withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS, usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                         sh "echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USERNAME} --password-stdin"
-
                     }
                     // Tag the Docker image
                     sh "docker tag ${PROJECT_NAME}_image ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}:latest"
