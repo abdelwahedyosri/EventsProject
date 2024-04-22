@@ -21,8 +21,6 @@ services:
       - "8081:8081"
     networks:
       - sonarnet
-    environment:
-      - NEXUS_ADMIN_PASSWORD=new_password
     volumes:
       - nexus_data:/nexus-data
       - nexus_backups:/nexus-backups
