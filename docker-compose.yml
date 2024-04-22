@@ -33,7 +33,7 @@ services:
     networks:
       - sonarnet
     volumes:
-      - ./prometheus:/etc/prometheus
+      -  /var/lib/jenkins/workspace/prometheus:/etc/prometheus
 
 networks:
   sonarnet:
