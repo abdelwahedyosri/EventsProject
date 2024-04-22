@@ -33,7 +33,16 @@ pipeline {
                 }
             }
         }
-
+        stage('Build Application') {
+                    steps {
+                        // Build the application using Maven
+                        script {
+                            dir("${PROJECT_NAME}") {
+                                sh 'mvn clean package'
+                            }
+                        }
+                    }
+                }
         stage('Build Project Image') {
             steps {
                 script {
@@ -61,16 +70,7 @@ pipeline {
             }
         }*/
 
-        stage('Build Application') {
-            steps {
-                // Build the application using Maven
-                script {
-                    dir("${PROJECT_NAME}") {
-                        sh 'mvn clean package'
-                    }
-                }
-            }
-        }
+
 
         stage('Deploy to Nexus Repository') {
             steps {
