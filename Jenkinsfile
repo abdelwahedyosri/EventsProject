@@ -74,7 +74,7 @@ pipeline {
        stage('Show Prometheus Metrics') {
            steps {
                script {
-                   sh "docker exec -t prometheus curl -s http://192.168.33.10:9090/metrics"
+                   sh "docker exec -t prometheus wget -q -O - http://192.168.33.10:9090/metrics"
                }
            }
        }
