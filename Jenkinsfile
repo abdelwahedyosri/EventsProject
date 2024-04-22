@@ -70,18 +70,11 @@ pipeline {
             }
         }
 
-        stage('Deploy Prometheus') {
-            steps {
-                // Deploy Prometheus
-                script {
-                    sh 'docker-compose up -d prometheus'
-                }
-            }
-        }
+
        stage('Show Prometheus Metrics') {
            steps {
                script {
-                   sh "docker exec -t prometheus curl -s http://localhost:9090/metrics"
+                   sh "docker exec -t prometheus curl -s http://192.168.33.10:9090/metrics"
                }
            }
        }
