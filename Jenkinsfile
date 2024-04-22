@@ -10,6 +10,9 @@ pipeline {
         DOCKER_HUB_CREDENTIALS = 'DOCKER_HUB_CREDENTIALS' // Update with the ID of your Docker Hub credentials
         DOCKERFILE_NAME = 'Dockerfile'
     }
+    triggers {
+        pollSCM('* * * * *') // Poll SCM every minute
+    }
     stages {
         stage('Shutdown Containers') {
             steps {
@@ -31,6 +34,16 @@ pipeline {
                 }
             }
         }
+         stage('Compile Application') {
+                    steps {
+                        // Compile the application using Maven
+                        script {
+                            dir("${PROJECT_NAME}") {
+                                sh 'mvn compile'
+                            }
+                        }
+                    }
+                }
         stage('Build Application') {
             steps {
                 // Build the application using Maven
