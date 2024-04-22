@@ -47,7 +47,7 @@ pipeline {
         stage('Deploy to Nexus Repository') {
             steps {
                 dir("${PROJECT_NAME}") {
-                    sh 'mvn deploy'
+                    sh 'mvn deploy' ||true
                 }
             }
         }
