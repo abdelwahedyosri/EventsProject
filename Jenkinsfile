@@ -96,13 +96,14 @@ pipeline {
             }
         }*/
 
-   stage('Push to Docker Hub') {
-       steps {
-           script {
-               withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS, usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-                   sh "curl -v -u ${DOCKER_HUB_USERNAME}:${DOCKER_HUB_PASSWORD} --upload-file foo.txt https://nexushost/repository/somerepo/foo.txt"
+       stage('Push to Docker Hub') {
+           steps {
+               script {
+                   def user = sh(script: 'echo $DOCKER_HUB_USERNAME', returnStdout: true).trim()
+                   def pw = sh(script: 'echo $DOCKER_HUB_PASSWORD', returnStdout: true).trim()
+                   sh "echo ${pw} | docker login -u ${user} --password-stdin"
                }
            }
        }
-   }
+    }
 }
