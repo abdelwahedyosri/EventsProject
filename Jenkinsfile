@@ -9,7 +9,8 @@ pipeline {
         GIT_REPO_URL = 'https://github.com/abdelwahedyosri/EventsProject.git' // Update with your Git repo URL
         DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_CREDENTIALS') // Update with your Docker Hub username
         DOCKER_HUB_PASSWORD = credentials('DOCKER_HUB_CREDENTIALS') // Add your Docker Hub password as a Jenkins credential
-        DOCKER_HUB_REPO = "${DOCKER_HUB_CREDENTIALS}/${PROJECT_NAME}"
+        DOCKER_HUB_REPO = "${DOCKER_HUB_USERNAME}/${PROJECT_NAME}"
+        DOCKERFILE_NAME = 'Dockerfile'
     }
     stages {
         stage('Shutdown Containers') {
@@ -36,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image for the project
-                    sh "docker build -t ${PROJECT_NAME}_image ./${PROJECT_NAME}"
+                    sh "docker build -t ${PROJECT_NAME}_image -f ./${PROJECT_NAME}/${DOCKERFILE_NAME} ./${PROJECT_NAME}"
                 }
             }
         }
@@ -80,7 +81,7 @@ pipeline {
             steps {
                 script {
                     // Log in to Docker Hub
-                    sh "docker login -u ${DOCKER_HUB_CREDENTIALS} -p ${DOCKER_HUB_CREDENTIALS}"
+                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
                     // Tag the Docker image
                     sh "docker tag ${PROJECT_NAME}_image ${DOCKER_HUB_REPO}:latest"
                     // Push the Docker image to Docker Hub
