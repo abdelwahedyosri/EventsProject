@@ -34,15 +34,24 @@ pipeline {
             }
         }
         stage('Build Application') {
-                    steps {
-                        // Build the application using Maven
-                        script {
-                            dir("${PROJECT_NAME}") {
-                                sh 'mvn clean package'
-                            }
-                        }
+            steps {
+                // Build the application using Maven
+                script {
+                    dir("${PROJECT_NAME}") {
+                        sh 'mvn clean package'
                     }
                 }
+            }
+        }
+
+        stage('Deploy to Nexus Repository') {
+            steps {
+                dir("${PROJECT_NAME}") {
+                    sh 'mvn deploy'
+                }
+            }
+        }
+
         stage('Build Project Image') {
             steps {
                 script {
@@ -69,16 +78,6 @@ pipeline {
                 }
             }
         }*/
-
-
-
-        stage('Deploy to Nexus Repository') {
-            steps {
-                 dir("${PROJECT_NAME}") {
-                     sh 'mvn deploy'
-                 }
-            }
-        }
 
         stage('Push to Docker Hub') {
             steps {
