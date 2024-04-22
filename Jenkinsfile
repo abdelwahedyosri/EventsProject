@@ -12,9 +12,9 @@ pipeline {
         DOCKERFILE_NAME = 'Dockerfile'
         EMAIL_RECIPIENTS = 'yosri.abdelwahed@esprit.tn' // Update with your email address
     }
-    triggers {
+    /*triggers {
         githubPush() // Trigger the pipeline on every push
-    }
+    }*/
     stages {
         stage('Shutdown Containers') {
             steps {
@@ -94,14 +94,14 @@ pipeline {
            }
        }
 
-       /* stage('Run JUnit tests') {
+        stage('Run JUnit tests') {
             steps {
                 // Run JUnit tests using Maven
                 script {
                     sh 'mvn test'
                 }
             }
-        }*/
+        }
 
        stage('SonarQube Metrics') {
            steps {
