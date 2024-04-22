@@ -88,11 +88,11 @@ pipeline {
                         sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
                     }
                     // Tag the Docker image
-                    sh "docker tag ${PROJECT_NAME}_image ${DOCKER_HUB_REPO}:latest"
+                    sh "docker tag ${PROJECT_NAME}_image ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}:latest"
                     // Push the Docker image to Docker Hub
-                    sh "docker push ${DOCKER_HUB_REPO}:latest"
+                    sh "docker push ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}:latest"
                 }
             }
-        }
+
     }
 }
