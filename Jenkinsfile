@@ -4,7 +4,7 @@ pipeline {
         SONARQUBE_DB_CREDENTIALS = credentials('SONARQUBE_DB_CREDENTIALS')
         SONARQUBE_JDBC_USERNAME = ''
         SONARQUBE_JDBC_PASSWORD = ''
-        SONAR_HOST_URL = 'http://192.168.33.10:9080' // Update this with your SonarQube server URL
+        SONAR_HOST_URL = 'http://192.168.33.10:9000' // Update this with your SonarQube server URL
         SONAR_SCANNER_HOME = tool 'sonar-scanner'
         PROJECT_NAME = 'eventsproject' // Update with your project name
         GIT_REPO_URL = 'https://github.com/abdelwahedyosri/EventsProject.git' // Update with your Git repo URL
