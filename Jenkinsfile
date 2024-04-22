@@ -84,7 +84,7 @@ pipeline {
                 script {
                     // Log in to Docker Hub
                     withCredentials([usernamePassword(credentialsId: DOCKER_HUB_CREDENTIALS, usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                        sh "echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USERNAME} --password-stdin"
                     }
                     // Tag the Docker image
                     sh "docker tag ${PROJECT_NAME}_image ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}:latest"
