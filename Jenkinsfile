@@ -9,7 +9,7 @@ pipeline {
         GIT_REPO_URL = 'https://github.com/abdelwahedyosri/EventsProject.git' // Update with your Git repo URL
         DOCKER_HUB_CREDENTIALS = 'DOCKER_HUB_CREDENTIALS' // Update with the ID of your Docker Hub credentials
         DOCKERFILE_NAME = 'Dockerfile'
-        EMAIL_RECIPIENTS = 'your-email@example.com' // Update with your email address
+        EMAIL_RECIPIENTS = 'yosri.abdelwahed@esprit.tn' // Update with your email address
     }
     triggers {
         pollSCM('* * * * *') // Poll SCM every minute
@@ -102,20 +102,20 @@ pipeline {
             }
         }*/
 
+       stage('Email Notification') {
+           steps {
+               script {
+                   emailext attachLog: true, body: 'The pipeline has been executed successfully.', subject: 'Pipeline Execution Status', to: "${EMAIL_RECIPIENTS}"
+               }
+           }
+       }
+
        stage('Push to Docker Hub') {
            steps {
                script {
                    def user = sh(script: 'echo $DOCKER_HUB_USERNAME', returnStdout: true).trim()
                    def pw = sh(script: 'echo $DOCKER_HUB_PASSWORD', returnStdout: true).trim()
                    sh "echo ${pw} | docker login -u ${user} --password-stdin"
-               }
-           }
-       }
-
-       stage('Email Notification') {
-           steps {
-               script {
-                   emailext attachLog: true, body: 'The pipeline has been executed successfully.', subject: 'Pipeline Execution Status', to: "${EMAIL_RECIPIENTS}"
                }
            }
        }
