@@ -5,7 +5,7 @@ FROM adoptopenjdk/openjdk11:alpine-jre
 WORKDIR /app
 
 # Copy the JAR file from Jenkins workspace to the working directory in the container
-COPY target/*.jar app.jar
+COPY eventsproject/target/*.jar app.jar
 
 # Specify the command to run on container start
 CMD ["java", "-jar", "app.jar"]
