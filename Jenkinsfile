@@ -34,12 +34,5 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            // Shutdown the Docker containers
-            script {
-                sh 'docker-compose down'
-            }
-        }
-    }
+
 }
