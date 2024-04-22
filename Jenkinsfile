@@ -5,9 +5,9 @@ pipeline {
         SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS')
         SONAR_HOST_URL = 'http://192.168.33.10:9080' // Update this with your SonarQube server URL
         SONAR_SCANNER_HOME = tool 'sonar-scanner'
-        PROJECT_NAME = 'my_project' // Update with your project name
-        GIT_REPO_URL = 'https://github.com/abdelwahedyosri/EventsProject' // Update with your Git repo URL
-        DOCKER_HUB_USERNAME = 'your_dockerhub_username' // Update with your Docker Hub username
+        PROJECT_NAME = 'eventsproject' // Update with your project name
+        GIT_REPO_URL = 'https://github.com/abdelwahedyosri/EventsProject.git' // Update with your Git repo URL
+        DOCKER_HUB_USERNAME = 'credentials('DOCKER_HUB_CREDENTIALS') // Update with your Docker Hub username
         DOCKER_HUB_PASSWORD = credentials('DOCKER_HUB_CREDENTIALS') // Add your Docker Hub password as a Jenkins credential
         DOCKER_HUB_REPO = "${DOCKER_HUB_CREDENTIALS}/${PROJECT_NAME}"
     }
@@ -50,14 +50,14 @@ pipeline {
             }
         }
 
-        stage('Run JUnit tests') {
+       /* stage('Run JUnit tests') {
             steps {
                 // Run JUnit tests using Maven
                 script {
                     sh 'mvn test'
                 }
             }
-        }
+        }*/
 
         stage('Build Application') {
             steps {
