@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        SONARQUBE_JDBC_USERNAME = credentials('SONARQUBE_DB_CREDENTIALS')
-        SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS')
+        SONARQUBE_JDBC_USERNAME = ''
+        SONARQUBE_JDBC_PASSWORD = ''
         SONAR_HOST_URL = 'http://192.168.33.10:9080' // Update this with your SonarQube server URL
         SONAR_SCANNER_HOME = tool 'sonar-scanner'
         PROJECT_NAME = 'eventsproject' // Update with your project name
@@ -103,11 +103,20 @@ pipeline {
         }*/
 
        stage('SonarQube Metrics') {
+
+       environment {
+                       SONARQUBE_JDBC_USERNAME = credentials('SONARQUBE_DB_CREDENTIALS_USR')
+                       SONARQUBE_JDBC_PASSWORD = credentials('SONARQUBE_DB_CREDENTIALS_PSW')
+                   }
            steps {
                script {
-                   dir("${PROJECT_NAME}") {
-                       sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${PROJECT_NAME} -Dsonar.sources=./ -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONARQUBE_JDBC_USERNAME} -Dsonar.password=${SONARQUBE_JDBC_PASSWORD}"
-                   }
+                   withCredentials([usernamePassword(credentialsId: 'SONARQUBE_DB_CREDENTIALS', passwordVariable: 'SONARQUBE_JDBC_PASSWORD_PSW', usernameVariable: 'SONARQUBE_JDBC_USERNAME_USR')]) {
+                                           SONARQUBE_JDBC_USERNAME = "${SONARQUBE_JDBC_USERNAME_USR}"
+                                           SONARQUBE_JDBC_PASSWORD = "${SONARQUBE_JDBC_PASSWORD_PSW}"
+                                           dir("${PROJECT_NAME}") {
+                                               sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${PROJECT_NAME} -Dsonar.sources=./ -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONARQUBE_JDBC_USERNAME} -Dsonar.password=${SONARQUBE_JDBC_PASSWORD}"
+                                           }
+                                       }
                }
            }
        }
