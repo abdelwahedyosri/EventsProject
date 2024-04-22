@@ -65,16 +65,18 @@ pipeline {
             steps {
                 // Build the application using Maven
                 script {
-                    sh 'mvn clean package'
+                    dir("${PROJECT_NAME}") {
+                        sh 'mvn clean package'
+                    }
                 }
             }
         }
 
         stage('Deploy to Nexus Repository') {
             steps {
-                script {
-                    sh 'mvn deploy'
-                }
+                 dir("${PROJECT_NAME}") {
+                     sh 'mvn deploy'
+                 }
             }
         }
 
