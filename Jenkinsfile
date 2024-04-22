@@ -7,7 +7,7 @@ pipeline {
         SONAR_SCANNER_HOME = tool 'sonar-scanner'
         PROJECT_NAME = 'eventsproject' // Update with your project name
         GIT_REPO_URL = 'https://github.com/abdelwahedyosri/EventsProject.git' // Update with your Git repo URL
-        DOCKER_HUB_USERNAME = 'credentials('DOCKER_HUB_CREDENTIALS') // Update with your Docker Hub username
+        DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_CREDENTIALS') // Update with your Docker Hub username
         DOCKER_HUB_PASSWORD = credentials('DOCKER_HUB_CREDENTIALS') // Add your Docker Hub password as a Jenkins credential
         DOCKER_HUB_REPO = "${DOCKER_HUB_CREDENTIALS}/${PROJECT_NAME}"
     }
