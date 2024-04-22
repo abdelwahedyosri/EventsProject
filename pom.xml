@@ -15,9 +15,10 @@
     <name>eventsProject</name>
     <description>eventsProject</description>
     <scm>
-        <connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection>
-        <developerConnection>scm:svn:https://somerepository.com/svn_repo/trunk</developerConnection>
-        <url>http://somerepository.com/view.cgi</url>
+        <url>https://github.com/abdelwahedyosri/EventsProject.git</url>
+        <connection>scm:git:https://github.com/abdelwahedyosri/EventsProject.git</connection>
+        <developerConnection>scm:git:https://github.com/abdelwahedyosri/EventsProject.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
     <properties>
         <java.version>1.8</java.version>
