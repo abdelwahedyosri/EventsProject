@@ -22,10 +22,11 @@ services:
     networks:
       - sonarnet
     environment:
-      - NEXUS_ADMIN_PASSWORD=new_password
+      - INSTALL4J_ADD_VM_PARAMS=-Dnexus.security.needFirstUserSetup=false
     volumes:
       - nexus_data:/nexus-data
       - nexus_backups:/nexus-backups
+    command: ["sh", "-c", "echo 'admin.password=$(openssl rand -base64 30)' > /nexus-data/admin.password && cat /nexus-data/admin.password && exec /opt/sonatype/nexus/bin/nexus run"]
 
   prometheus:
     image: prom/prometheus:latest
