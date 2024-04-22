@@ -21,9 +21,11 @@ services:
       - "8081:8081"
     networks:
       - sonarnet
+    environment:
+      - NEXUS_ADMIN_PASSWORD=new_password
     volumes:
-      - ./nexus-data:/nexus-data   # Mount nexus data directory to host
-      - ./nexus-backups:/nexus-backups  # Optionally mount nexus backups directory to host
+      - nexus_data:/nexus-data
+      - nexus_backups:/nexus-backups
 
   prometheus:
     image: prom/prometheus:latest
@@ -35,3 +37,7 @@ services:
 
 networks:
   sonarnet:
+
+volumes:
+  nexus_data:
+  nexus_backups:
