@@ -35,6 +35,22 @@ services:
     volumes:
       -  /var/lib/jenkins/workspace/prometheus:/etc/prometheus
 
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    networks:
+      - sonarnet
+    environment:
+      SONARQUBE_JDBC_URL: jdbc:mysql://mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
+      SONARQUBE_JDBC_USERNAME: sonar
+      SONARQUBE_JDBC_PASSWORD: sonar
+      SONARQUBE_JDBC_MAXACTIVE: 60
+      SONARQUBE_JDBC_MAXIDLE: 5
+      SONARQUBE_JDBC_MINIDLE: 2
+      SONARQUBE_JDBC_MAXWAIT: 5000
+
 networks:
   sonarnet:
 
