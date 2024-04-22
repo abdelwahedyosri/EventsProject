@@ -104,12 +104,15 @@ pipeline {
         }*/
 
        stage('SonarQube Metrics') {
-
-        withCredentials([usernamePassword(credentialsId: 'SONARQUBE_DB_CREDENTIALS', passwordVariable: 'SONARQUBE_JDBC_PASSWORD', usernameVariable: 'SONARQUBE_JDBC_USERNAME')]) {
-                               dir("${PROJECT_NAME}") {
-                                   sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${PROJECT_NAME} -Dsonar.sources=./ -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONARQUBE_JDBC_USERNAME} -Dsonar.password=${SONARQUBE_JDBC_PASSWORD}"
-                               }
-                           }
+           steps {
+               script {
+                   withCredentials([usernamePassword(credentialsId: 'SONARQUBE_DB_CREDENTIALS', passwordVariable: 'SONARQUBE_JDBC_PASSWORD', usernameVariable: 'SONARQUBE_JDBC_USERNAME')]) {
+                       dir("${PROJECT_NAME}") {
+                           sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${PROJECT_NAME} -Dsonar.sources=./ -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONARQUBE_JDBC_USERNAME} -Dsonar.password=${SONARQUBE_JDBC_PASSWORD}"
+                       }
+                   }
+               }
+           }
        }
 
        stage('Email Notification') {
