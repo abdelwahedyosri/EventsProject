@@ -15,10 +15,10 @@ pipeline {
         stage('Shutdown Containers') {
             steps {
                 script {
-                    // Stop all running Docker containers
-                    sh 'docker stop $(docker ps -aq)'
-                    // Remove all stopped Docker containers
-                    sh 'docker rm $(docker ps -aq)'
+                   // Stop all running Docker containers
+                   sh 'docker stop $(docker ps -aq) || echo "No containers to stop"'
+                   // Remove all stopped Docker containers
+                   sh 'docker rm $(docker ps -aq) || echo "No containers to remove"'
                 }
             }
         }
