@@ -27,6 +27,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
+                     sh "rm -rf ${PROJECT_NAME}"
                     // Clone the Git repository
                     sh "git clone ${GIT_REPO_URL} ${PROJECT_NAME}"
                 }
