@@ -8,7 +8,6 @@ pipeline {
         PROJECT_NAME = 'eventsproject' // Update with your project name
         GIT_REPO_URL = 'https://github.com/abdelwahedyosri/EventsProject.git' // Update with your Git repo URL
         DOCKER_HUB_CREDENTIALS = 'DOCKER_HUB_CREDENTIALS' // Update with the ID of your Docker Hub credentials
-        DOCKER_HUB_REPO = "${DOCKER_HUB_USERNAME}/${PROJECT_NAME}"
         DOCKERFILE_NAME = 'Dockerfile'
     }
     stages {
@@ -93,6 +92,6 @@ pipeline {
                     sh "docker push ${DOCKER_HUB_USERNAME}/${PROJECT_NAME}:latest"
                 }
             }
-
+        }
     }
 }
