@@ -47,7 +47,9 @@ pipeline {
         stage('Deploy to Nexus Repository') {
             steps {
                 dir("${PROJECT_NAME}") {
-                    sh 'mvn deploy -DskipTests=true'
+                     catchError(buildResult: 'UNSTABLE') {
+                         sh 'mvn deploy -DskipTests=true'
+                      }
                 }
             }
         }
